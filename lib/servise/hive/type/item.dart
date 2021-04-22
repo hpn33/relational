@@ -36,35 +36,87 @@ class Item extends HiveObject {
 
   Future<void> addUsed(int id) async {
     itemUsed.add(id);
+    updateAt = DateTime.now();
+
     save();
   }
 
-  int refs() {
-    var sum = 0;
+  // final refs = DelayListValue<Item>((list) {
+  //   list.clear();
 
-    for (final item in hiveW.items.all) {
-      for (final ui in item.itemUsed) {
-        if (ui == key) {
-          sum++;
-        }
-      }
+  //   for (final item in hiveW.items.all) {
+  //     for (final ui in item.itemUsed) {
+  //       if (ui == key) {
+  //         list.add(item);
+  //         continue;
+  //       }
+  //     }
+  //   }
+
+  //   return list;
+  // });
+  final _refs = <Item>[];
+
+  List<Item> get refs {
+    if (_refs.isNotEmpty) {
+      return _refs;
     }
 
-    return sum;
+    return getRefs();
   }
 
-  List<Item> itemRefs() {
-    final refs = <Item>[];
+  List<Item> getRefs() {
+    _refs.clear();
 
     for (final item in hiveW.items.all) {
       for (final ui in item.itemUsed) {
         if (ui == key) {
-          refs.add(item);
+          _refs.add(item);
           continue;
         }
       }
     }
 
-    return refs;
+    return _refs;
   }
 }
+
+// class DelayValue<T> {
+//   final T Function(T) getFunc;
+
+//   DelayValue(this.getFunc);
+
+//   T? _value;
+
+//   T get value {
+//     if (_value != null) {
+//       return _value!;
+//     }
+
+//     return getFunc(_value!);
+//   }
+
+//   void refresh() => getFunc(_value!);
+
+//   void call() => getFunc(_value!);
+// }
+
+// class DelayListValue<T> {
+//   final List<T> Function(List<T>) getFunc;
+
+//   DelayListValue(this.getFunc);
+
+//   List<T> _list = [];
+
+//   List<T> get value {
+//     if (_list.isNotEmpty) {
+//       return _list;
+//     }
+
+//     return getFunc(_list);
+//   }
+
+//   void refresh() => getFunc(_list);
+
+//   void call() => getFunc(_list);
+// }

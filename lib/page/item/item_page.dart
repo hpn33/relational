@@ -66,7 +66,7 @@ class ItemPage extends StatelessWidget {
             children: [
               Text('Where Used (refs)'),
               Divider(),
-              for (final refItem in item.itemRefs())
+              for (final refItem in item.refs)
                 InkWell(
                   onTap: () {
                     Navigator.push(

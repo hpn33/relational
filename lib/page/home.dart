@@ -45,7 +45,7 @@ class HomePage extends HookWidget {
           children: [
             Text(item.title),
             Text('used ${item.itemUsed.length}'),
-            Text('ref ${item.refs()}'),
+            Text('ref ${item.refs.length}'),
           ],
         ),
       ),
