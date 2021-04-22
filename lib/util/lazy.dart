@@ -5,13 +5,8 @@ class LazyValue<T> {
 
   T? _value;
 
-  T get value {
-    if (_value != null) {
-      return _value!;
-    }
-
-    return this();
-  }
+  // if value was null, init value
+  T get value => value ?? this();
 
   T call() => fetch(_value!);
 }
