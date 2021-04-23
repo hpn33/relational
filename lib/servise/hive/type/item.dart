@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:relational/util/fetch.dart';
 import 'package:relational/util/lazy.dart';
 
 import '../hive_wrapper.dart';
@@ -22,7 +23,7 @@ class Item extends HiveObject {
   late DateTime updateAt;
 
   Item() {
-    refs = LazyListValue<Item>(
+    refs = FetchListValue<Item>(
       (list) {
         list.clear();
 
@@ -40,7 +41,7 @@ class Item extends HiveObject {
     );
   }
 
-  late final LazyListValue refs;
+  late final FetchListValue refs;
 
   factory Item.fastInit({required String title}) {
     return Item()

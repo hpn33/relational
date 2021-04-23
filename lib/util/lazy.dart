@@ -1,34 +1,32 @@
 class LazyValue<T> {
-  final T Function(T) fetch;
+  final T Function() init;
 
-  LazyValue(this.fetch);
+  LazyValue(this.init);
 
   T? _value;
 
   // if value was null, init value
-  T get value => value ?? this();
+  T get value {
+    if (_value == null) {
+      _value = init();
+    }
 
-  T call() => fetch(_value!);
+    return _value!;
+  }
 }
 
 class LazyListValue<T> {
-  final List<T> Function(List<T>) fetch;
+  final List<T> Function() init;
 
-  LazyListValue(this.fetch);
+  LazyListValue(this.init);
 
   List<T> _list = [];
 
-  // return list
-  // if not empty return list
-  // if empty run fetch function and then return list
   List<T> get list {
-    if (_list.isNotEmpty) {
-      return _list;
+    if (_list.isEmpty) {
+      _list = init();
     }
 
-    return this();
+    return _list;
   }
-
-  // when invoke then run fetch func
-  List<T> call() => fetch(_list);
 }
