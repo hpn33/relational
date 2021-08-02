@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'package:relational/util/fetch.dart';
-import 'package:relational/util/lazy.dart';
 
 import '../hive_wrapper.dart';
 part 'item.g.dart';
